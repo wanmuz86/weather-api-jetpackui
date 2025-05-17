@@ -38,8 +38,7 @@ fun WeatherItem(weather: Weather) {
         ){
             AsyncImage(
                 model = Utility.convertIdToImageUrl(weather.weather[0].icon),
-                contentDescription = "Weather Icon",
-                modifier = Modifier.size(150.dp)
+                contentDescription = "Weather Icon"
             )
 
             Column(
