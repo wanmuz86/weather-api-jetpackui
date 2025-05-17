@@ -1,4 +1,4 @@
-package com.muzaffar.weatherapiexample.ui
+package com.muzaffar.weatherapiexample.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -16,8 +17,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.muzaffar.weatherapiexample.R
 import com.muzaffar.weatherapiexample.models.Weather
+import com.muzaffar.weatherapiexample.utils.Utility
+import com.muzaffar.weatherapiexample.utils.Utility.Companion.convertKelvinToCelsius
+
 
 @Composable
 fun WeatherItem(weather: Weather) {
@@ -31,21 +36,23 @@ fun WeatherItem(weather: Weather) {
         Row(
             modifier = Modifier.padding(16.dp)
         ){
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Weather Image",)
+            AsyncImage(
+                model = Utility.convertIdToImageUrl(weather.weather[0].icon),
+                contentDescription = "Weather Icon",
+                modifier = Modifier.size(150.dp)
+            )
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp).weight(3f)
             ) {
-                Text(text = "${weather.dt}",fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(text = "${Utility.convertTimestampToDate(weather.dt)}",fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Temperature: ${weather.temp.day}°C", fontSize = 16.sp)
+                Text(text = "Temperature: ${convertKelvinToCelsius(weather.temp.day)}°C", fontSize = 16.sp)
                 Text(text = "Humidity: ${weather.humidity}%", fontSize = 16.sp)
                 Text(text = "Pressure: ${weather.pressure} hPa", fontSize = 16.sp)
                 Text(text = "Weather: ${weather.weather[0].description}", fontSize = 16.sp)
-                Text(text = "Sunrise: ${weather.sunrise}", fontSize = 16.sp)
-                Text(text = "Sunset: ${weather.sunset}", fontSize = 16.sp)
+                Text(text = "Sunrise: ${Utility.convertTimestampToDate(weather.sunrise)}", fontSize = 16.sp)
+                Text(text = "Sunset: ${Utility.convertTimestampToDate(weather.sunset)}", fontSize = 16.sp)
 
             }
         }

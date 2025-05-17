@@ -11,7 +11,7 @@ interface ApiService {
 
     // https://api.openweathermap.org/data/2.5/forecast/daily?q=kajang&appId=9fd7a449d055dba26a982a3220f32aa2
     // suspend - keyword untuk backfround method in kotlin coroutine
-    @GET("data/2.5/weather")
+    @GET("data/2.5/forecast/daily")
     suspend fun getWeather(@Query("q") city: String,
                            @Query("appid") apiKey: String): WeatherResponse
 }
